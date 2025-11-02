@@ -67,11 +67,34 @@ namespace Analys
                     totalHastighet += hastighet;
                     antal++;
                 }
+                if (antal > 0)
+                {
+                    double medelRpm = totalRpm / antal;
+                    double medelHastighet = totalHastighet / antal;
 
-
+                    Console.WriteLine($"Antal datapunkter: {antal}");
+                    Console.WriteLine($"Medel RPM: {medelRpm:F1}");
+                    Console.WriteLine($"Medel hastighet: {medelHastighet:F1} km/h");
+                }
+                else
+                {
+                    Console.WriteLine("Ingen giltig data hittades.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Något gick fel: {ex.Message}");
             }
 
-        }    
+            Console.WriteLine("\nTryck på valfri tangent för att avsluta...");
+            Console.ReadKey();
+        }
+
+
     }
-}
+} 
+
+        
+    
+
 
