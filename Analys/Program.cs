@@ -38,7 +38,7 @@ namespace Analys
                 return;
             }
 
-            Console.WriteLine("\nHämtar data från ThingSpeak...\n");
+            Console.WriteLine("\nHämtar data från ThingSpeak...\n"); 
 
         } 
     }
