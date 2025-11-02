@@ -38,9 +38,40 @@ namespace Analys
                 return;
             }
 
-            Console.WriteLine("\nHämtar data från ThingSpeak...\n"); 
+            Console.WriteLine("\nHämtar data från ThingSpeak...\n");
 
-        } 
+            try
+            {
+                using var client = new HttpClient();
+                var json = await client.GetStringAsync(url);
+                var jsonDoc = JsonDocument.Parse(json);
+
+                var feeds = jsonDoc.RootElement.GetProperty("feeds");
+
+                if (feeds.GetArrayLength() == 0)
+                {
+                    Console.WriteLine("Inga datapunkter hittades.");
+                    return;
+                }
+
+                double totalHastighet = 0;
+                double totalRpm = 0;
+                int antal = 0;
+
+                foreach (var feed in feeds.EnumerateArray())
+                {
+                    double.TryParse(feed.GetProperty("field1").GetString(), out double rpm);
+                    double.TryParse(feed.GetProperty("field2").GetString(), out double hastighet);
+
+                    totalRpm += rpm;
+                    totalHastighet += hastighet;
+                    antal++;
+                }
+
+
+            }
+
+        }    
     }
 }
 
